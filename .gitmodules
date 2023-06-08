@@ -1,3 +1,0 @@
-[submodule "ProjectEarthServerAPI/data"]
-	path = ProjectEarthServerAPI/data
-	url = https://github.com/jackcaver/ApiData.git
