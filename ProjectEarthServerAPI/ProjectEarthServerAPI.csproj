@@ -17,4 +17,8 @@
     <PackageReference Include="Uma.Uuid" Version="0.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="data\NewFolder\" />
+  </ItemGroup>
+
 </Project>

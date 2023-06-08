@@ -6,6 +6,7 @@ using ProjectEarthServerAPI.Models.Buildplate;
 using ProjectEarthServerAPI.Models.Features;
 using ProjectEarthServerAPI.Models.Multiplayer;
 using ProjectEarthServerAPI.Models.Player;
+using ProjectEarthServerAPI.Util;
 using Serilog;
 using Uma.Uuid;
 
@@ -19,25 +20,32 @@ namespace ProjectEarthServerAPI.Util
 		{
 			var buildplates = ReadPlayerBuildplateList(playerId);
 			BuildplateListResponse list = new BuildplateListResponse {result = new List<BuildplateData>()};
-			foreach (Guid id in buildplates.UnlockedBuildplates)
-			{
-				var bp = ReadBuildplate(id);
-				bp.order = buildplates.UnlockedBuildplates.IndexOf(id);
-				list.result.Add(bp.id != bp.templateId ? ReadBuildplate(id) : CloneTemplateBuildplate(playerId, bp));
-			}
 
-			buildplates.LockedBuildplates.ForEach(action =>
+			// Find all buildplate files and add ID to unlockedBuildplates
+			int order = 0;
+			foreach (string filePath in Directory.EnumerateFiles(StateSingleton.Instance.config.buildplateStorageFolderLocation, "*.json"))
 			{
-				var bp = ReadBuildplate(action);
-				bp.order = buildplates.LockedBuildplates.IndexOf(action) + buildplates.UnlockedBuildplates.Count;
-				list.result.Add(bp);
-			});
+				var id = Guid.Parse(Path.GetFileNameWithoutExtension(filePath));
+				var bp = ReadBuildplate(id);
+				bp.order = order;
+				list.result.Add(bp.id != bp.templateId ? ReadBuildplate(id) : CloneTemplateBuildplate(playerId, bp));
+				order++;
+			}
 
 			return list;
 		}
 
 		public static PlayerBuildplateList ReadPlayerBuildplateList(string playerId)
-			=> GenericUtils.ParseJsonFile<PlayerBuildplateList>(playerId, "buildplates");
+		{
+			var parsedData = GenericUtils.ParseJsonFile<PlayerBuildplateList>(playerId, "buildplates");
+
+			foreach (string filePath in Directory.EnumerateFiles(StateSingleton.Instance.config.buildplateStorageFolderLocation, "*.json"))
+			{
+				parsedData.UnlockedBuildplates.Add(Guid.Parse(Path.GetFileNameWithoutExtension(filePath)));
+			}
+
+			return parsedData;
+		}
 
 		public static void WritePlayerBuildplateList(string playerId, PlayerBuildplateList list)
 			=> GenericUtils.WriteJsonFile(playerId, list, "buildplates");
