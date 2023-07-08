@@ -1,0 +1,62 @@
+{
+    "tappableID": "genoa:stone_mound_b_tappable_map",
+    "rarity": "Common",
+    "dropTable": {
+        "88ffe819-aefb-e080-5ef5-e04244a387e1": {
+            "chance": 51.9,
+            "min": 1,
+            "max": 4
+        },
+		"eead8c3f-638b-91fa-6e0a-f99f6906dd56": {
+            "chance": 45.6,
+            "min": 2,
+            "max": 16
+        },
+		"5fa4c9bd-e618-a2e4-96e6-639f7cffc4e4": {
+            "chance": 41.0,
+            "min": 1,
+            "max": 4
+        },
+		"5b81110c-1152-d4d4-a7c6-849fe93795d8": {
+            "chance": 38.1,
+            "min": 2,
+            "max": 15
+        },
+		"fc593f6c-c5a9-c608-d0aa-c89a42b6703d": {
+            "chance": 29.3,
+            "min": 1,
+            "max": 4
+        },
+		"663f3282-95c6-6d22-ebf5-f1f923964d77": {
+            "chance": 27.9,
+            "min": 1,
+            "max": 4
+        },
+		"a5a48e3f-4df6-5100-aa95-e81b3273ecd2": {
+            "chance": 9.9,
+            "min": 1,
+            "max": 1
+        },
+		"45a12ea7-aee9-e377-3d1e-f7fb27c8cbcc": {
+            "chance": 9.3,
+            "min": 1,
+            "max": 2
+        },
+
+		"660c0f43-72f6-3735-1af3-38c987259ab6": {
+            "chance": 0.4,
+            "min": 1,
+            "max": 1
+        },
+		"c2e5a2eb-7888-e2cb-c641-951f93f5937b": {
+            "chance": 0.2,
+            "min": 1,
+            "max": 1
+        },
+		"07d29b57-cba3-71de-5a3f-3ea5752fdb6e": {
+            "chance": 0.1,
+            "min": 1,
+            "max": 1
+        }
+    }
+}
