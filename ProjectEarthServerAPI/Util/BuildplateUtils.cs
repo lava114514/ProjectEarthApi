@@ -18,19 +18,23 @@ namespace ProjectEarthServerAPI.Util
 
 		public static BuildplateListResponse GetBuildplatesList(string playerId)
 		{
-			var buildplates = ReadPlayerBuildplateList(playerId);
+			//var buildplates = ReadPlayerBuildplateList(playerId);
 			BuildplateListResponse list = new BuildplateListResponse {result = new List<BuildplateData>()};
 
 			// Find all buildplate files and add ID to unlockedBuildplates
-			int order = 0;
 			foreach (string filePath in Directory.EnumerateFiles(StateSingleton.Instance.config.buildplateStorageFolderLocation, "*.json"))
 			{
 				var id = Guid.Parse(Path.GetFileNameWithoutExtension(filePath));
 				var bp = ReadBuildplate(id);
-				bp.order = order;
 				list.result.Add(bp.id != bp.templateId ? ReadBuildplate(id) : CloneTemplateBuildplate(playerId, bp));
-				order++;
 			}
+
+			Random rng = new Random(DateTime.Now.Millisecond);
+			while (list.result.Count > 20)
+				list.result.RemoveAt(rng.Next(list.result.Count));
+
+			for (int i = 0; i < list.result.Count; i++)
+				list.result[i].order = i;
 
 			return list;
 		}
